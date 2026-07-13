@@ -1,254 +1,110 @@
 {
     "comparativo_ca": {
-        "DUITAMA": 3600,
-        "PAIPA": 3600,
-        "SOGAMOSO": 3600,
-        "TUNJA": 3600
+        "DUITAMA": 3450,
+        "PAIPA": 1820,
+        "SOGAMOSO": 4120,
+        "TUNJA": 5680
     },
     "municipios": {
         "TUNJA": {
             "top_candidatos": [
                 {
-                    "candidato": "CANDIDATO_5_CA_1",
+                    "candidato": "CANDIDATO_1_CA_TUN",
                     "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "votos": 450
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_10",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_2_SE_TUN",
+                    "partido": "PACTO HISTORICO",
+                    "votos": 380
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_2",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_3_CA_TUN",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 290
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_3",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_4",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_5",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_6",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_7",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_8",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_9",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_4_SE_TUN",
+                    "partido": "CENTRO DEMOCRATICO",
+                    "votos": 150
                 }
             ],
-            "partido_lider_senado": "ALIANZA VERDE",
-            "arrastre_verde": [
-                {
-                    "puesto": "PUESTO CABECERA",
-                    "ratio": 1.0
-                }
-            ]
+            "partido_lider_senado": "PACTO HISTORICO"
         },
         "PAIPA": {
             "top_candidatos": [
                 {
-                    "candidato": "CANDIDATO_5_CA_1",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_1_CA_PAI",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 310
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_10",
+                    "candidato": "CANDIDATO_2_SE_PAI",
                     "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "votos": 280
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_2",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_3_CA_PAI",
+                    "partido": "CENTRO DEMOCRATICO",
+                    "votos": 190
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_3",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_4",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_5",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_6",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_7",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_8",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_9",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_4_SE_PAI",
+                    "partido": "PACTO HISTORICO",
+                    "votos": 110
                 }
             ],
-            "partido_lider_senado": "ALIANZA VERDE",
-            "arrastre_verde": [
-                {
-                    "puesto": "PUESTO CABECERA",
-                    "ratio": 1.0
-                }
-            ]
+            "partido_lider_senado": "ALIANZA VERDE"
         },
         "SOGAMOSO": {
             "top_candidatos": [
                 {
-                    "candidato": "CANDIDATO_5_CA_1",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_1_CA_SOG",
+                    "partido": "CENTRO DEMOCRATICO",
+                    "votos": 620
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_10",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_2_SE_SOG",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 410
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_2",
+                    "candidato": "CANDIDATO_3_CA_SOG",
                     "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "votos": 390
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_3",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_4",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_5",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_6",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_7",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_8",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_9",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_4_SE_SOG",
+                    "partido": "PACTO HISTORICO",
+                    "votos": 240
                 }
             ],
-            "partido_lider_senado": "ALIANZA VERDE",
-            "arrastre_verde": [
-                {
-                    "puesto": "PUESTO CABECERA",
-                    "ratio": 1.0
-                }
-            ]
+            "partido_lider_senado": "PARTIDO LIBERAL"
         },
         "DUITAMA": {
             "top_candidatos": [
                 {
-                    "candidato": "CANDIDATO_5_CA_1",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_1_CA_DUI",
+                    "partido": "PACTO HISTORICO",
+                    "votos": 580
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_10",
+                    "candidato": "CANDIDATO_2_SE_DUI",
                     "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "votos": 510
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_2",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_3_CA_DUI",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 340
                 },
                 {
-                    "candidato": "CANDIDATO_5_CA_3",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_4",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_5",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_6",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_7",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_8",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
-                },
-                {
-                    "candidato": "CANDIDATO_5_CA_9",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 165
+                    "candidato": "CANDIDATO_4_SE_DUI",
+                    "partido": "CENTRO DEMOCRATICO",
+                    "votos": 210
                 }
             ],
-            "partido_lider_senado": "ALIANZA VERDE",
-            "arrastre_verde": [
-                {
-                    "puesto": "PUESTO CABECERA",
-                    "ratio": 1.0
-                }
-            ]
+            "partido_lider_senado": "ALIANZA VERDE"
         }
     }
 }
