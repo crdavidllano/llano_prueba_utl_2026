@@ -1,0 +1,46 @@
+{
+    "municipio": "TUNJA",
+    "departamento": "BOYACA",
+    "mesas": [
+        {
+            "id_mesa": "15-TUN-01-001",
+            "mesa": "1"
+        },
+        {
+            "id_mesa": "15-TUN-01-002",
+            "mesa": "2"
+        },
+        {
+            "id_mesa": "15-TUN-01-003",
+            "mesa": "3"
+        },
+        {
+            "id_mesa": "15-TUN-01-004",
+            "mesa": "4"
+        },
+        {
+            "id_mesa": "15-TUN-01-005",
+            "mesa": "5"
+        },
+        {
+            "id_mesa": "15-TUN-01-006",
+            "mesa": "6"
+        },
+        {
+            "id_mesa": "15-TUN-01-007",
+            "mesa": "7"
+        },
+        {
+            "id_mesa": "15-TUN-01-008",
+            "mesa": "8"
+        },
+        {
+            "id_mesa": "15-TUN-01-009",
+            "mesa": "9"
+        },
+        {
+            "id_mesa": "15-TUN-01-010",
+            "mesa": "10"
+        }
+    ]
+}

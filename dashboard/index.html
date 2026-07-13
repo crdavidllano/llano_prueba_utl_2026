@@ -207,10 +207,11 @@
             document.getElementById('partidoLider').innerText = dataMun.partido_lider_senado;
             
             // Actualizar Tabla
+            // Actualizar Tabla de Candidatos
             const tbody = document.querySelector('#tablaCandidatos tbody');
             tbody.innerHTML = "";
             dataMun.top_candidatos.forEach(c => {
-                tbody.innerHTML += `<tr><td>${c.candidato}</td><td>${c.partid}</td><td>${c.votos}</td></tr>`;
+                tbody.innerHTML += `<tr><td>${c.candidato}</td><td>${c.partido}</td><td>${c.votos}</td></tr>`;
             });
 
             // Actualizar Gráfico Arrastre con Línea de Referencia 1.0

@@ -2,132 +2,123 @@ import os
 import sys
 import argparse
 import time
-import sqlite3
+import json
 import requests
 
-# Configuración base del pipeline
-API_URL = "https://resultadospreccongreso2026.registraduria.gov.co"
+# Endpoints oficiales de la Registraduría y mapeo de códigos
+API_URL_BASE = "https://resultadospreccongreso2026.registraduria.gov.co"
+MUNICIPIOS_CODIGOS = {
+    "TUNJA": {"depto": "15", "muni": "001"},
+    "PAIPA": {"depto": "15", "muni": "047"},
+    "SOGAMOSO": {"depto": "15", "muni": "094"},
+    "DUITAMA": {"depto": "15", "muni": "015"}
+}
 MUNICIPIOS_DEFECTO = ["TUNJA", "PAIPA", "SOGAMOSO", "DUITAMA"]
-DB_PATH = os.path.join(os.path.dirname(__file__), "../db/puestos_2026.db")
 
-def inicializar_db():
-    """Asegura la existencia del archivo de base de datos antes de poblarlo."""
-    os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
-    if not os.path.exists(DB_PATH):
-        open(DB_PATH, 'w').close()
+# Rutas de datos estructurados según el pliego de la prueba
+SAMPLE_DATA_DIR = os.path.join(os.path.dirname(__file__), "../sample_data")
+TEMP_DATA_DIR = os.path.join(os.path.dirname(__file__), "../temp_extracted")
 
 def ejecutar_preflight(municipios):
-    """
-    BONUS RETO 1.2: Simula la petición y muestra el conteo de mesas proyectadas
-    sin realizar descargas físicas ni almacenamiento en la base de datos.
-    """
-    print("=== EJECUCIÓN PREFLIGHT (Simulación de Conteos) ===")
-    headers = {"User-Agent": "Mozilla/5.0 (UTL Senado Analista Datos 2026)"}
-    
+    """Muestra una estimación analítica rápida de las mesas sin descargar datos."""
+    print("=== EJECUCIÓN PREFLIGHT (Estimación de Carga) ===")
     for mun in municipios:
-        # Simulación controlada simulando la lectura del JSON de metadatos de la Registraduría
-        print(f"[PREFLIGHT] Municipio: {mun} -> Estado API: DISPONIBLE | Estimación: ~250 mesas proyectadas.")
+        mun_clean = mun.upper().strip()
+        if mun_clean in MUNICIPIOS_CODIGOS:
+            print(f"[PREFLIGHT] Municipio: {mun_clean} -> API Target: {API_URL_BASE}/api/v1/del/15/{MUNICIPIOS_CODIGOS[mun_clean]['muni']}")
+        else:
+            print(f"[PREFLIGHT] Municipio: {mun_clean} -> No soportado en codificación base.")
     print("====================================================")
 
 def consultar_api_con_backoff(url, headers, max_retries=3):
-    """Realiza peticiones HTTP implementando Retry y Exponential Backoff técnico."""
+    """Intenta consumir la API REST con estrategia de reintento exponencial."""
     delay = 2
     for intento in range(max_retries):
         try:
-            # En entorno real de prueba, si la API está caída, se intercepta el error
-            response = requests.get(url, headers=headers, timeout=10)
+            # User-Agent para evitar bloqueos preventivos
+            response = requests.get(url, headers=headers, timeout=8)
             if response.status_code == 200:
                 return response.json()
-        except requests.RequestException:
-            pass
-        print(f"[WARN] Intento {intento + 1} fallido. Reintentando en {delay}s...")
-        time.sleep(delay)
-        delay *= 2
+        except requests.RequestException as e:
+            print(f"[WARN] Intento {intento + 1} fallido debido a problemas de conexión: {e}")
+        
+        if intento < max_retries - 1:
+            print(f"[WARN] Reintentando en {delay}s...")
+            time.sleep(delay)
+            delay *= 2
     return None
 
-def ejecutar_scraper(municipios):
-    """Extrae la información electoral garantizando la no duplicidad de registros."""
-    inicializar_db()
-    conn = sqlite3.connect(DB_PATH)
-    cursor = conn.cursor()
+def generar_datos_muestra_autocontenidos(municipio_name):
+    """Genera datos de contingencia realistas con la estructura requerida para los retos."""
+    print(f"[MOCK] Generando datos de simulación realistas para {municipio_name}...")
     
+    # Estructura de 10 mesas ficticias para simular datos por puesto y mesa
+    mesas_lista = []
+    for m in range(1, 11):
+        id_mesa = f"15-{municipio_name[:3]}-01-{str(m).zfill(3)}"
+        mesas_lista.append({
+            "id_mesa": id_mesa,
+            "mesa": str(m)
+        })
+        
+    return {
+        "municipio": municipio_name,
+        "departamento": "BOYACA",
+        "mesas": mesas_lista
+    }
+
+def extraer_datos(municipios):
+    """Extrae datos de la API real o aplica el fallback auto-generado."""
+    os.makedirs(TEMP_DATA_DIR, exist_ok=True)
+    os.makedirs(SAMPLE_DATA_DIR, exist_ok=True)
     headers = {"User-Agent": "Mozilla/5.0 (UTL Senado Analista Datos 2026)"}
-    print(f"[START] Iniciando pipeline de extracción para: {', '.join(municipios)}")
     
-    # Datos semilla de simulación por contingencia (Reto 1.1 / Mapeo de Respaldo)
-    # Se simulan estructuras JSON idénticas a las provistas por el volcado oficial de la Registraduría
     for mun in municipios:
-        print(f"[FETCH] Procesando datos de {mun}...")
+        mun_clean = mun.upper().strip()
+        if mun_clean not in MUNICIPIOS_CODIGOS:
+            print(f"[ERROR] El municipio {mun_clean} no está mapeado.")
+            continue
+            
+        cod_muni = MUNICIPIOS_CODIGOS[mun_clean]["muni"]
+        url_api = f"{API_URL_BASE}/api/v1/del/15/{cod_muni}"
         
-        # Simulación de respuesta estructurada JSON de la API de la Registraduría
-        # Estructura de campos indexados requeridos
-        filas_insertadas = 0
-        filas_omitidas = 0
+        print(f"[FETCH] Intentando conectar con API real para {mun_clean}...")
+        datos_extraidos = consultar_api_con_backoff(url_api, headers)
         
-        # Insertar de forma idempotente la metadata simulada/extraída
-        # Se asumen datos para Cámara (CA) y Senado (SE)
-        for corp in ['CA', 'SE']:
-            for i in range(1, 11): # Muestra representativa estandarizada de mesas
-                id_mesa = f"15-{mun[0:3]}-01-001-{str(i).zfill(3)}"
+        # MECANISMO DE FALLBACK SEGURO
+        if datos_extraidos is None:
+            print(f"[FALLBACK] API de la Registraduría no responde. Buscando en sample_data/...")
+            ruta_sample = os.path.join(SAMPLE_DATA_DIR, f"{mun_clean.lower()}_sample.json")
+            
+            # Si el archivo de muestra no existe, ¡lo creamos de inmediato!
+            if not os.path.exists(ruta_sample):
+                print(f"[WARN] No se encontró un archivo de respaldo en {ruta_sample}.")
+                datos_ficticios = generar_datos_muestra_autocontenidos(mun_clean)
+                with open(ruta_sample, 'w', encoding='utf-8') as f:
+                    json.dump(datos_ficticios, f, indent=4, ensure_ascii=False)
+                print(f"[SUCCESS] Archivo de contingencia autogenerado en: {ruta_sample}")
                 
-                # Partidos principales según el manual técnico
-                partidos_mock = [
-                    (5, "ALIANZA VERDE"),
-                    (87, "PACTO HISTORICO"),
-                    (10, "CENTRO DEMOCRÁTICO"),
-                    (2, "PARTIDO CONSERVADOR")
-                ]
-                
-                # Poblar tabla maestra de partidos de manera limpia e idempotente
-                for codpar, nom_partido in partidos_mock:
-                    cursor.execute("""
-                        INSERT OR IGNORE INTO partidos (codpar, nombre_partido) 
-                        VALUES (?, ?)
-                    """, (codpar, nom_partido))
-                
-                # Poblar tabla de mesas
-                cursor.execute("""
-                    INSERT OR IGNORE INTO mesas (id_mesa, departamento, municipio, zona, puesto, mesa)
-                    VALUES (?, 'BOYACA', ?, '01', 'PUESTO CABECERA', ?)
-                """, (id_mesa, mun, str(i).zfill(3)))
-                
-                # Insertar los votos de candidatos candidatos simulados para los partidos
-                for codpar, _ in partidos_mock:
-                    cand_nom = f"CANDIDATO_{codpar}_{corp}_{i}"
-                    votos_simulados = 45 if codpar == 5 else 20
-                    
-                    cursor.execute("""
-                        INSERT OR IGNORE INTO resultados_votos (id_mesa, corporacion, codpar, candidato_nombre, votos)
-                        VALUES (?, ?, ?, ?, ?)
-                    """, (id_mesa, corp, codpar, cand_nom, votos_simulados))
-                    
-                    if cursor.rowcount > 0:
-                        filas_insertadas += 1
-                    else:
-                        filas_omitidas += 1
-                        
-        # Registrar auditoría en la BD (Reto 2.1)
-        cursor.execute("""
-            INSERT INTO carga_log (municipio, filas_insertadas, filas_omitidas)
-            VALUES (?, ?, ?)
-        """, (mun, filas_insertadas, filas_omitidas))
-        
-        print(f"[SUCCESS] {mun} completado. Insertadas: {filas_insertadas}, Omitidas (Duplicadas): {filas_omitidas}")
-        
-    conn.commit()
-    conn.close()
-    print("[END] Ejecución del scraper finalizada correctamente.")
+            # Cargar los datos del archivo que ahora sí existe
+            with open(ruta_sample, 'r', encoding='utf-8') as f:
+                datos_extraidos = json.load(f)
+            print(f"[SUCCESS] Datos cargados exitosamente de la contingencia local.")
+        else:
+            print(f"[SUCCESS] Datos descargados en tiempo real desde la API oficial.")
+            
+        # Guardar en archivo temporal para que etl.py lo procese
+        output_temp = os.path.join(TEMP_DATA_DIR, f"{mun_clean}.json")
+        with open(output_temp, 'w', encoding='utf-8') as f:
+            json.dump(datos_extraidos, f, indent=4, ensure_ascii=False)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Scraper Electoral Boyacá 2026")
-    parser.add_argument("--municipios", nargs="+", help="Lista explícita de municipios a procesar")
-    parser.add_argument("--preflight", action="store_true", help="Ejecuta la validación analítica sin descargar")
+    parser = argparse.ArgumentParser(description="Scraper Electoral Híbrido Boyacá 2026")
+    parser.add_argument("--municipios", nargs="+", help="Lista de municipios a procesar")
+    parser.add_argument("--preflight", action="store_true", help="Muestra estimaciones sin descargar")
     
     args = parser.parse_args()
-    
     municipios_target = args.municipios if args.municipios else MUNICIPIOS_DEFECTO
     
     if args.preflight:
         ejecutar_preflight(municipios_target)
     else:
-        ejecutar_scraper(municipios_target)
+        extraer_datos(municipios_target)

@@ -10,15 +10,21 @@ Para desplegar y configurar el entorno virtual de ejecución, corra:
 ```bash
 pip install -r requirements.txt
 
-# 1. Extracción e ingesta de datos en la base SQLite relacional
+# 1. Ejecutar el Scraper (Intentará API -> si falla descarga desde 'sample_data/')
 python scraper/scraper.py
 
-# 2. Transformación y generación del set de datos analítico para cliente web
+# 2. Ejecutar el proceso ETL para transformar, normalizar e insertar a SQLite puestos_2026.db
+python db/etl.py
+
+# 3. Exportar universos consolidados de la base de datos al JSON del dashboard
 python dashboard/export_data.py
 
-# 3. Generación automática de gráficos estadísticos correlacionales
+# 4. Generar visualizaciones y reportes estadísticos
 python viz/heatmap.py
 python viz/scatter.py
+
+# 5. Generar manifiesto de evaluación de la UTL
+python outputs/generar_manifest.py
 
 API
 Patrón de URL mapeado: https://resultadospreccongreso2026.registraduria.gov.co/api/v1/del/{departamento}/{municipio}
