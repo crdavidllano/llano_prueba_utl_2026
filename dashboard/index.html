@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Electoral - Boyacá 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f4f6f9;
+            --card-bg: #ffffff;
+            --text-color: #333333;
+            --border-color: #e0e0e0;
+            --primary-accent: #2c3e50;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --card-bg: #1e1e1e;
+            --text-color: #f5f5f5;
+            --border-color: #333333;
+            --primary-accent: #34495e;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .toggle-btn, .export-btn {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            background-color: var(--primary-accent);
+            color: white;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .full-width {
+            grid-column: span 2;
+        }
+
+        select {
+            padding: 8px;
+            font-size: 16px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: var(--primary-accent);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h2>Pipeline Electoral Boyacá 2026 - UTL Senado</h2>
+        <div>
+            <button class="toggle-btn" onclick="toggleDarkMode()">Alternar Modo Oscuro</button>
+            <button class="export-btn" onclick="exportarCSV()">Exportar Datos CSV</button>
+        </div>
+    </div>
+
+    <div class="grid-container">
+        <div class="card full-width">
+            <h3>Votos Totales a Cámara por Municipio</h3>
+            <canvas id="chartComparativo" height="100"></canvas>
+        </div>
+
+        <div class="card">
+            <h3>Análisis Detallado de Votación</h3>
+            <label for="selectorMunicipio">Seleccione Municipio: </label>
+            <select id="selectorMunicipio" onchange="actualizarMunicipio()">
+                <option value="TUNJA">TUNJA</option>
+                <option value="PAIPA">PAIPA</option>
+                <option value="SOGAMOSO">SOGAMOSO</option>
+                <option value="DUITAMA">DUITAMA</option>
+            </select>
+            
+            <h4>Partido Líder en Senado: <span id="partidoLider" style="color: #007C34;">Cargando...</span></h4>
+            
+            <table id="tablaCandidatos">
+                <thead>
+                    <tr>
+                        <th>Candidato</th>
+                        <th>Partido</th>
+                        <th>Votos CA</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3>Análisis de Arrastre Alianza Verde por Puesto</h3>
+            <canvas id="chartArrastre" height="200"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Paleta oficial de colores exigida en el pliego
+        const COLORES_PARTIDO = {
+            "Alianza Verde": "#007C34",
+            "Pacto Histórico": "#7B2D8B",
+            "Centro Democrático": "#1E477D",
+            "Conservador": "#E07B00"
+        };
+
+        // Estado y datos simulación (reemplaza por carga fetch de data.json en producción)
+        const mockData = {
+            "comparativo_ca": { "TUNJA": 12500, "PAIPA": 6400, "SOGAMOSO": 11200, "DUITAMA": 9800 },
+            "municipios": {
+                "TUNJA": {
+                    "partido_lider_senado": "Alianza Verde",
+                    "top_candidatos": [
+                        { "candidato": "CANDIDATO_5_CA_1", "partido": "Alianza Verde", "votos": 450 },
+                        { "candidato": "CANDIDATO_87_CA_1", "partido": "Pacto Histórico", "votos": 200 }
+                    ],
+                    "arrastre_verde": [{ "puesto": "PUESTO CABECERA", "ratio": 1.25 }]
+                },
+                "PAIPA": {
+                    "partido_lider_senado": "Pacto Histórico",
+                    "top_candidatos": [
+                        { "candidato": "CANDIDATO_87_CA_2", "partido": "Pacto Histórico", "votos": 390 },
+                        { "candidato": "CANDIDATO_5_CA_2", "partido": "Alianza Verde", "votos": 180 }
+                    ],
+                    "arrastre_verde": [{ "puesto": "PUESTO CABECERA", "ratio": 0.85 }]
+                }
+            }
+        };
+
+        let chartGlobalCA, chartGlobalArrastre;
+
+        window.onload = function() {
+            renderizarGraficoGlobal();
+            actualizarMunicipio();
+        };
+
+        function toggleDarkMode() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            document.documentElement.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+        }
+
+        function renderizarGraficoGlobal() {
+            const ctx = document.getElementById('chartComparativo').getContext('2d');
+            chartGlobalCA = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(mockData.comparativo_ca),
+                    datasets: [{
+                        label: 'Votos Totales Cámara',
+                        data: Object.values(mockData.comparativo_ca),
+                        backgroundColor: '#34495e'
+                    }]
+                },
+                options: { responsive: true }
+            });
+        }
+
+        function actualizarMunicipio() {
+            const m = document.getElementById('selectorMunicipio').value;
+            const dataMun = mockData.municipios[m] || { partido_lider_senado: "Sin datos", top_candidatos: [], arrastre_verde: [] };
+            
+            // Actualizar Líder
+            document.getElementById('partidoLider').innerText = dataMun.partido_lider_senado;
+            
+            // Actualizar Tabla
+            const tbody = document.querySelector('#tablaCandidatos tbody');
+            tbody.innerHTML = "";
+            dataMun.top_candidatos.forEach(c => {
+                tbody.innerHTML += `<tr><td>${c.candidato}</td><td>${c.partid}</td><td>${c.votos}</td></tr>`;
+            });
+
+            // Actualizar Gráfico Arrastre con Línea de Referencia 1.0
+            const ctxArrastre = document.getElementById('chartArrastre').getContext('2d');
+            if (chartGlobalArrastre) chartGlobalArrastre.destroy();
+
+            chartGlobalArrastre = new Chart(ctxArrastre, {
+                type: 'line',
+                data: {
+                    labels: dataMun.arrastre_verde.map(p => p.puesto),
+                    datasets: [
+                        {
+                            label: 'Ratio Verde (SE/CA)',
+                            data: dataMun.arrastre_verde.map(p => p.ratio),
+                            borderColor: COLORES_PARTIDO["Alianza Verde"] || '#007C34',
+                            fill: false
+                        },
+                        {
+                            label: 'Línea de Referencia Estándar (1.0)',
+                            data: dataMun.arrastre_verde.map(() => 1.0),
+                            borderColor: 'red',
+                            borderDash: [5, 5],
+                            fill: false
+                        }
+                    ]
+                }
+            });
+        }
+
+        function exportarCSV() {
+            let csvContent = "data:text/csv;charset=utf-8,Municipio,VotosCamara\n";
+            Object.entries(mockData.comparativo_ca).forEach(e => {
+                csvContent += `${e[0]},${e[1]}\n`;
+            });
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "reporte_consolidado_electoral.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
