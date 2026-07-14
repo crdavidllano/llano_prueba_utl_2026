@@ -1,4 +1,4 @@
-# LLANO Prueba Técnica UTL Senado 2026
+# LLANO_Prueba Técnica UTL Senado 2026
 
 ## Candidato
 * **Nombre:** Cristhian David LLano
