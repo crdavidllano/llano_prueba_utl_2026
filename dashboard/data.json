@@ -1,110 +1,550 @@
 {
     "comparativo_ca": {
-        "DUITAMA": 3450,
-        "PAIPA": 1820,
-        "SOGAMOSO": 4120,
-        "TUNJA": 5680
+        "TUNJA": 74415,
+        "DUITAMA": 48845,
+        "PAIPA": 16917,
+        "SOGAMOSO": 51566
     },
     "municipios": {
         "TUNJA": {
-            "top_candidatos": [
+            "top_camara": [
                 {
-                    "candidato": "CANDIDATO_1_CA_TUN",
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 19943,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "RAMIRO BARRAGAN ADAME",
                     "partido": "ALIANZA VERDE",
-                    "votos": 450
+                    "votos": 4294,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_2_SE_TUN",
-                    "partido": "PACTO HISTORICO",
-                    "votos": 380
+                    "candidato": "JAIME RAUL SALAMANCA TORRES",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 3986,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_3_CA_TUN",
+                    "candidato": "YAMIT NOE HURTADO NEIRA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 3933,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "INGRID MARLEN SOGAMOSO ALFONSO",
+                    "partido": "CENTRO DEMOCRÁTICO",
+                    "votos": 2903,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "FABIAN CAMILO ROJAS BARRERA",
+                    "partido": "PARTIDO CONSERVADOR",
+                    "votos": 2848,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "WILDER IVAN SUESCA OCHOA",
+                    "partido": "CENTRO DEMOCRÁTICO",
+                    "votos": 2756,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "HECTOR DAVID CHAPARRO CHAPARRO",
                     "partido": "PARTIDO LIBERAL",
-                    "votos": 290
+                    "votos": 2341,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_4_SE_TUN",
-                    "partido": "CENTRO DEMOCRATICO",
-                    "votos": 150
+                    "candidato": "JOSE DARIO MAHECHA CASTILLO",
+                    "partido": "CENTRO DEMOCRÁTICO",
+                    "votos": 2242,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "OSCAR LEONARDO AVILA ROMERO",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 2180,
+                    "corporacion": "CÁMARA"
                 }
             ],
-            "partido_lider_senado": "PACTO HISTORICO"
+            "top_senado": [
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 20651,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 10613,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JOHN EDICKSON AMAYA RODRIGUEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 6693,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "ARIEL FERNANDO AVILA MARTINEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 2232,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JUAN CAMILO OSTOS ROMERO",
+                    "partido": "PARTIDO CONSERVADOR",
+                    "votos": 1532,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "GERSSON VARGAS VALDELEON",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1009,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "LUIS CARLOS RUA SANCHEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 950,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JONATHAN FERNEY PULIDO HERNANDEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 909,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JOHNNATAN ALEXIS TAMAYO USUGA",
+                    "partido": "PARTIDO 3",
+                    "votos": 877,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 867,
+                    "corporacion": "SENADO"
+                }
+            ],
+            "total_votos_global_ca": 74415,
+            "total_votos_global_se": 74243,
+            "partido_lider_senado": "PACTO HISTÓRICO",
+            "arrastre_verde": [
+                {
+                    "puesto": "PUESTO_0700001",
+                    "ratio": 1.03
+                }
+            ]
         },
         "PAIPA": {
-            "top_candidatos": [
+            "top_camara": [
                 {
-                    "candidato": "CANDIDATO_1_CA_PAI",
-                    "partido": "PARTIDO LIBERAL",
-                    "votos": 310
-                },
-                {
-                    "candidato": "CANDIDATO_2_SE_PAI",
+                    "candidato": "YAMIT NOE HURTADO NEIRA",
                     "partido": "ALIANZA VERDE",
-                    "votos": 280
+                    "votos": 4756,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_3_CA_PAI",
-                    "partido": "CENTRO DEMOCRATICO",
-                    "votos": 190
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 3219,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_4_SE_PAI",
-                    "partido": "PACTO HISTORICO",
-                    "votos": 110
+                    "candidato": "JAIME RAUL SALAMANCA TORRES",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1465,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "HECTOR DAVID CHAPARRO CHAPARRO",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1393,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "EDUAR ALEXIS TRIANA RINCON",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 869,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "WILDER IVAN SUESCA OCHOA",
+                    "partido": "CENTRO DEMOCRÁTICO",
+                    "votos": 729,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 382,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "RAMIRO BARRAGAN ADAME",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 353,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 299,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "OSCAR LEONARDO AVILA ROMERO",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 273,
+                    "corporacion": "CÁMARA"
                 }
             ],
-            "partido_lider_senado": "ALIANZA VERDE"
+            "top_senado": [
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 3669,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 2771,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JOHN EDICKSON AMAYA RODRIGUEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1949,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLEDAD TAMAYO TAMAYO",
+                    "partido": "PARTIDO 3",
+                    "votos": 725,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "ARIEL FERNANDO AVILA MARTINEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 595,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 426,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "GLORIA ELSY DIAZ MARTINEZ",
+                    "partido": "PARTIDO 43",
+                    "votos": 373,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "HORACIO JOSE SERPA MONCADA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 333,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "CARLOS EDUARDO GUEVARA VILLABON",
+                    "partido": "PARTIDO 43",
+                    "votos": 276,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JONATHAN FERNEY PULIDO HERNANDEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 271,
+                    "corporacion": "SENADO"
+                }
+            ],
+            "total_votos_global_ca": 16917,
+            "total_votos_global_se": 16393,
+            "partido_lider_senado": "ALIANZA VERDE",
+            "arrastre_verde": [
+                {
+                    "puesto": "PUESTO_0700181",
+                    "ratio": 0.58
+                }
+            ]
         },
         "SOGAMOSO": {
-            "top_candidatos": [
+            "top_camara": [
                 {
-                    "candidato": "CANDIDATO_1_CA_SOG",
-                    "partido": "CENTRO DEMOCRATICO",
-                    "votos": 620
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 13163,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_2_SE_SOG",
+                    "candidato": "HECTOR DAVID CHAPARRO CHAPARRO",
                     "partido": "PARTIDO LIBERAL",
-                    "votos": 410
+                    "votos": 5568,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_3_CA_SOG",
+                    "candidato": "RAMIRO BARRAGAN ADAME",
                     "partido": "ALIANZA VERDE",
-                    "votos": 390
+                    "votos": 2771,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_4_SE_SOG",
-                    "partido": "PACTO HISTORICO",
-                    "votos": 240
+                    "candidato": "DIANA PAOLA HERRERA NUÑEZ",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1962,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "JAIME RAUL SALAMANCA TORRES",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1757,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "NADIA ALEXANDRA CARREÑO AVELLA",
+                    "partido": "PARTIDO CONSERVADOR",
+                    "votos": 1736,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1719,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "FABIAN CAMILO ROJAS BARRERA",
+                    "partido": "PARTIDO CONSERVADOR",
+                    "votos": 1380,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "YURY NEILL DIAZ ARANGUREN",
+                    "partido": "PARTIDO 120",
+                    "votos": 1342,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "JAIRO ENRIQUE CASTIBLANCO PARRA",
+                    "partido": "PARTIDO 120",
+                    "votos": 1319,
+                    "corporacion": "CÁMARA"
                 }
             ],
-            "partido_lider_senado": "PARTIDO LIBERAL"
+            "top_senado": [
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 13957,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 8182,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JUAN CAMILO OSTOS ROMERO",
+                    "partido": "PARTIDO CONSERVADOR",
+                    "votos": 4150,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JOHN EDICKSON AMAYA RODRIGUEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 2639,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "HORACIO JOSE SERPA MONCADA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1895,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "MIGUEL ANGEL BARRETO CASTILLO",
+                    "partido": "PARTIDO 3",
+                    "votos": 1446,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "GUSTAVO ADOLFO MORENO HURTADO",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1433,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "CARLOS EDUARDO GUEVARA VILLABON",
+                    "partido": "PARTIDO 43",
+                    "votos": 942,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "GERSSON VARGAS VALDELEON",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 779,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 618,
+                    "corporacion": "SENADO"
+                }
+            ],
+            "total_votos_global_ca": 51566,
+            "total_votos_global_se": 50847,
+            "partido_lider_senado": "PACTO HISTÓRICO",
+            "arrastre_verde": [
+                {
+                    "puesto": "PUESTO_0700277",
+                    "ratio": 1.01
+                }
+            ]
         },
         "DUITAMA": {
-            "top_candidatos": [
+            "top_camara": [
                 {
-                    "candidato": "CANDIDATO_1_CA_DUI",
-                    "partido": "PACTO HISTORICO",
-                    "votos": 580
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 18479,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_2_SE_DUI",
-                    "partido": "ALIANZA VERDE",
-                    "votos": 510
-                },
-                {
-                    "candidato": "CANDIDATO_3_CA_DUI",
+                    "candidato": "HECTOR DAVID CHAPARRO CHAPARRO",
                     "partido": "PARTIDO LIBERAL",
-                    "votos": 340
+                    "votos": 4559,
+                    "corporacion": "CÁMARA"
                 },
                 {
-                    "candidato": "CANDIDATO_4_SE_DUI",
-                    "partido": "CENTRO DEMOCRATICO",
-                    "votos": 210
+                    "candidato": "JAIME RAUL SALAMANCA TORRES",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 2198,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1939,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "HERNEL DAVID ORTEGA GOMEZ",
+                    "partido": "CENTRO DEMOCRÁTICO",
+                    "votos": 1558,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "RAMIRO BARRAGAN ADAME",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1518,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "YAMIT NOE HURTADO NEIRA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1316,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "INGRID MARLEN SOGAMOSO ALFONSO",
+                    "partido": "CENTRO DEMOCRÁTICO",
+                    "votos": 1148,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "NANCY YANETH ZAPATA PACHON",
+                    "partido": "PARTIDO 120",
+                    "votos": 1136,
+                    "corporacion": "CÁMARA"
+                },
+                {
+                    "candidato": "JICLY ESGARDO MUTIS ISAZA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 1064,
+                    "corporacion": "CÁMARA"
                 }
             ],
-            "partido_lider_senado": "ALIANZA VERDE"
+            "top_senado": [
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PACTO HISTÓRICO",
+                    "votos": 15423,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 9205,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JOHN EDICKSON AMAYA RODRIGUEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 2755,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "ARIEL FERNANDO AVILA MARTINEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 1229,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JUAN CAMILO OSTOS ROMERO",
+                    "partido": "PARTIDO CONSERVADOR",
+                    "votos": 1196,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "CARLOS EDUARDO GUEVARA VILLABON",
+                    "partido": "PARTIDO 43",
+                    "votos": 992,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "GUSTAVO ADOLFO MORENO HURTADO",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 835,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "JONATHAN FERNEY PULIDO HERNANDEZ",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 699,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "GERSSON VARGAS VALDELEON",
+                    "partido": "PARTIDO LIBERAL",
+                    "votos": 610,
+                    "corporacion": "SENADO"
+                },
+                {
+                    "candidato": "SOLO POR LA LISTA",
+                    "partido": "ALIANZA VERDE",
+                    "votos": 586,
+                    "corporacion": "SENADO"
+                }
+            ],
+            "total_votos_global_ca": 48845,
+            "total_votos_global_se": 48843,
+            "partido_lider_senado": "PACTO HISTÓRICO",
+            "arrastre_verde": [
+                {
+                    "puesto": "PUESTO_0700079",
+                    "ratio": 1.29
+                }
+            ]
         }
     }
 }

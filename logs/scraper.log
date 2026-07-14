@@ -1,0 +1,16 @@
+2026-07-14 00:00:03,588 | ERROR | Expecting value: line 1 column 1 (char 0)
+2026-07-14 00:00:03,642 | INFO | tunja CA OK
+2026-07-14 00:00:03,982 | ERROR | Expecting value: line 1 column 1 (char 0)
+2026-07-14 00:00:04,039 | INFO | duitama CA OK
+2026-07-14 00:00:04,329 | INFO | sogamoso SE OK
+2026-07-14 00:00:04,380 | INFO | sogamoso CA OK
+2026-07-14 00:00:04,684 | ERROR | Extra data: line 1 column 2 (char 1)
+2026-07-14 00:00:04,759 | INFO | paipa CA OK
+2026-07-14 00:09:23,603 | INFO | tunja SE OK
+2026-07-14 00:09:23,915 | INFO | tunja CA OK
+2026-07-14 00:09:24,855 | INFO | duitama SE OK
+2026-07-14 00:09:25,194 | INFO | duitama CA OK
+2026-07-14 00:09:26,073 | INFO | sogamoso SE OK
+2026-07-14 00:09:26,372 | INFO | sogamoso CA OK
+2026-07-14 00:09:27,200 | INFO | paipa SE OK
+2026-07-14 00:09:27,587 | INFO | paipa CA OK

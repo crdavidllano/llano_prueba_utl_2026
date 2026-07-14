@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Electoral - Boyacá 2026</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.umd.min.js"></script>
     <style>
-        /* CSS Custom Properties para el Bonus de Dark Mode */
         :root {
             --bg-color: #f4f6f9;
             --card-bg: #ffffff;
@@ -52,30 +52,32 @@
             transition: opacity 0.2s;
         }
 
-        .btn:hover {
-            opacity: 0.9;
-        }
+        .btn:hover { opacity: 0.9; }
 
         .grid {
             display: grid;
             grid-template-columns: 1fr 3fr;
             gap: 20px;
+            margin-bottom: 20px;
         }
 
-        .panel-control {
-            background-color: var(--card-bg);
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
-            height: fit-content;
-        }
-
-        .panel-datos {
+        .panel-control, .panel-datos {
             background-color: var(--card-bg);
             padding: 20px;
             border-radius: 8px;
             border: 1px solid var(--border-color);
         }
+
+        .panel-control { height: fit-content; }
+
+        .chart-card {
+            background-color: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .chart-card h3 { margin-top: 0; }
 
         select {
             width: 100%;
@@ -89,25 +91,10 @@
             font-size: 14px;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
-        th, td {
-            text-align: left;
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        th {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-
-        [data-theme="dark"] th {
-            background-color: rgba(255, 255, 255, 0.05);
-        }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid var(--border-color); }
+        th { background-color: rgba(0, 0, 0, 0.05); }
+        [data-theme="dark"] th { background-color: rgba(255, 255, 255, 0.05); }
 
         .badge-partido {
             display: inline-block;
@@ -126,9 +113,7 @@
             font-weight: bold;
         }
 
-        [data-theme="dark"] .votos-destacados {
-            background-color: rgba(255, 255, 255, 0.08);
-        }
+        [data-theme="dark"] .votos-destacados { background-color: rgba(255, 255, 255, 0.08); }
     </style>
 </head>
 <body>
@@ -141,25 +126,36 @@
         </div>
     </div>
 
+    <div class="chart-card" style="margin-bottom:20px;">
+        <h3>Comparativo — Votos Cámara Totales por Municipio</h3>
+        <canvas id="chartComparativo" height="80"></canvas>
+    </div>
+
     <div class="grid">
         <div class="panel-control">
             <label for="selectorMunicipio"><strong>Seleccione Municipio:</strong></label>
-            <select id="selectorMunicipio" onchange="cambiarMunicipio()">
+            <select id="selectorMunicipio" onchange="cambiarFiltros()">
                 <option value="TUNJA">TUNJA</option>
                 <option value="PAIPA">PAIPA</option>
                 <option value="SOGAMOSO">SOGAMOSO</option>
                 <option value="DUITAMA">DUITAMA</option>
             </select>
-            
+
+            <label for="selectorCorp"><strong>Seleccione Corporación:</strong></label>
+            <select id="selectorCorp" onchange="cambiarFiltros()">
+                <option value="CÁMARA">CÁMARA</option>
+                <option value="SENADO">SENADO</option>
+            </select>
+
             <div id="resumenMetricas">
                 <p><strong>Mesas Procesadas:</strong> <span id="lblMesas">10</span></p>
-                <p><strong>Total Votos (Top):</strong> <span id="lblVotos">0</span></p>
+                <p><strong>Total Votos (Global Municipio):</strong> <span id="lblVotos">0</span></p>
                 <p><strong>Partido Líder SE:</strong> <span id="lblLiderSE" style="font-weight: bold;">--</span></p>
             </div>
         </div>
 
         <div class="panel-datos">
-            <h3>Top Candidatos Detectados en el Pipeline</h3>
+            <h3 id="tituloTablaCandidatos">Top Candidatos Cámara</h3>
             <table id="tablaCandidatos">
                 <thead>
                     <tr>
@@ -169,100 +165,203 @@
                         <th>Votos Registrados</th>
                     </tr>
                 </thead>
-                <tbody>
-                    </tbody>
+                <tbody></tbody>
             </table>
         </div>
     </div>
 
+    <div class="chart-card">
+        <h3>Arrastre Alianza Verde por Puesto (línea de referencia en 1.0)</h3>
+        <canvas id="chartArrastre" height="80"></canvas>
+    </div>
+
     <script>
-        // Colores reglamentarios exigidos por el pliego técnico (Reto 4)
         const coloresPartidos = {
             "ALIANZA VERDE": "#007C34",
             "PACTO HISTÓRICO": "#7B2D8B",
-            "PACTO HISTORICO": "#7B2D8B",
             "CENTRO DEMOCRÁTICO": "#1E477D",
-            "CENTRO DEMOCRATICO": "#1E477D",
-            "CONSERVADOR": "#E07B00",
-            "PARTIDO CONSERVADOR": "#E07B00"
+            "PARTIDO CONSERVADOR": "#E07B00",
+            "PARTIDO LIBERAL": "#E81B23"
         };
 
         let datosElectorales = {};
+        let chartComparativo = null;
+        let chartArrastre = null;
 
-        // Carga el archivo data.json mediante una petición local
         function inicializarDashboard() {
+            console.log("[INFO] Intentando cargar data.json...");
             fetch('data.json')
-                .then(response => response.json())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP status ${response.status}`);
+                    }
+                    return response.json();
+                })
                 .then(data => {
-                    // Mapeo adaptativo tolerante a la raíz del JSON
-                    datosElectorales = data.municipios ? data.municipios : data;
-                    console.log("Datos del pipeline cargados correctamente:", datosElectorales);
-                    cambiarMunicipio();
+                    console.log("[SUCCESS] JSON cargado correctamente:", data);
+                    datosElectorales = data.municipios || {};
+                    renderComparativo(data.comparativo_ca || {});
+                    cambiarFiltros();
                 })
                 .catch(error => {
-                    console.error("Error al cargar data.json. Asegúrate de usar http.server:", error);
+                    console.error("[ERROR CRÍTICO JS] No se pudo procesar data.json:", error);
+                    alert("Error al cargar el archivo de datos 'data.json'. Asegúrate de haber ejecutado 'python dashboard/export_data.py' con éxito.");
                 });
         }
 
-        // Renderiza los datos en la tabla según el municipio elegido
-        function cambiarMunicipio() {
-            const mun = document.getElementById('selectorMunicipio').value;
-            const dataMun = datosElectorales[mun];
-            
-            if (!dataMun) return;
+        function renderComparativo(comparativoCA) {
+            try {
+                const municipios = Object.keys(comparativoCA);
+                const valores = municipios.map(m => comparativoCA[m]);
 
-            // Extraer lista de candidatos de manera tolerante
-            const listaCandidatos = dataMun.top_candidatos || dataMun.candidatos || [];
-
-            // Calcular dinámicamente la suma de votos
-            const totalVotos = listaCandidatos.reduce((acc, c) => acc + (c.votos || 0), 0);
-            document.getElementById('lblVotos').innerText = totalVotos;
-
-            // Renderizar el partido líder del Senado en el panel izquierdo
-            const liderSE = dataMun.partido_lider_senado || "No detectado";
-            const colorLider = coloresPartidos[liderSE.toUpperCase()] || "inherit";
-            const lblLider = document.getElementById('lblLiderSE');
-            lblLider.innerText = liderSE;
-            lblLider.style.color = colorLider;
-
-            // Limpiar e iterar sobre el cuerpo de la tabla
-            const tbody = document.querySelector('#tablaCandidatos tbody');
-            tbody.innerHTML = "";
-            
-            if (listaCandidatos.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">No se encontraron candidatos procesados en el JSON para ${mun}</td></tr>`;
-                return;
+                if (chartComparativo) chartComparativo.destroy();
+                chartComparativo = new Chart(document.getElementById('chartComparativo'), {
+                    type: 'bar',
+                    data: {
+                        labels: municipios,
+                        datasets: [{
+                            label: 'Votos Cámara (totales)',
+                            data: valores,
+                            backgroundColor: '#2c3e50'
+                        }]
+                    },
+                    options: { responsive: true, plugins: { legend: { display: false } } }
+                });
+                console.log("[INFO] Gráfico comparativo renderizado.");
+            } catch(e) {
+                console.error("[ERROR COMPARATIVO CHART]", e);
             }
-
-            listaCandidatos.forEach(c => {
-                const nombreCand = c.candidato || c.nombre || "DESCONOCIDO";
-                const partidoCand = c.partido || "INDEPENDIENTE";
-                const votosCand = c.votos !== undefined ? c.votos : 0;
-                
-                // Deducir corporación analíticamente si no viene definida
-                let corporacion = c.corporacion || "";
-                if (!corporacion) {
-                    corporacion = nombreCand.toUpperCase().includes("_CA_") ? "CÁMARA" : "SENADO";
-                }
-
-                // Obtener color reglamentario o usar gris por defecto
-                const colorHex = coloresPartidos[partidoCand.toUpperCase()] || "#7f8c8d";
-                
-                tbody.innerHTML += `
-                    <tr>
-                        <td><strong>${nombreCand}</strong></td>
-                        <td>
-                            <span class="badge-partido" style="background-color: ${colorHex};"></span>
-                            ${partidoCand}
-                        </td>
-                        <td>${corporacion}</td>
-                        <td><span class="votos-destacados">${votosCand}</span></td>
-                    </tr>
-                `;
-            });
         }
 
-        // Lógica del switch para Alternar el Modo Claro / Oscuro (Bonus 4.1)
+        function renderArrastre(mun) {
+            try {
+                const dataMun = datosElectorales[mun];
+                const ratios = (dataMun && dataMun.arrastre_verde) ? dataMun.arrastre_verde : [];
+
+                if (chartArrastre) {
+                    chartArrastre.destroy();
+                    chartArrastre = null;
+                }
+
+                if (ratios.length === 0) {
+                    console.log(`[INFO] No hay ratios de arrastre para el municipio ${mun}`);
+                    return;
+                }
+
+                const labels = ratios.map(r => r.puesto);
+                chartArrastre = new Chart(document.getElementById('chartArrastre'), {
+                    type: 'line',
+                    data: {
+                        labels: labels,
+                        datasets: [
+                            {
+                                label: 'Ratio SE/CA — Alianza Verde',
+                                data: ratios.map(r => r.ratio),
+                                borderColor: '#007C34',
+                                backgroundColor: '#007C34',
+                                tension: 0.2
+                            },
+                            {
+                                label: 'Referencia (1.0)',
+                                data: labels.map(() => 1.0),
+                                borderColor: '#999999',
+                                borderDash: [6, 6],
+                                pointRadius: 0
+                            }
+                        ]
+                    },
+                    options: { responsive: true }
+                });
+                console.log("[INFO] Gráfico de arrastre renderizado.");
+            } catch(e) {
+                console.error("[ERROR ARRASTRE CHART]", e);
+            }
+        }
+
+        function cambiarFiltros() {
+            try {
+                const mun = document.getElementById('selectorMunicipio').value;
+                const corpSeleccionada = document.getElementById('selectorCorp').value;
+                const dataMun = datosElectorales[mun];
+
+                console.log(`[INFO] Cambiando filtros -> Municipio: ${mun}, Corp: ${corpSeleccionada}`);
+
+                if (!dataMun) {
+                    console.warn(`[WARN] No hay datos definidos para el municipio: ${mun}`);
+                    return;
+                }
+
+                // Actualizar título dinámicamente
+                document.getElementById('tituloTablaCandidatos').innerText = `Top Candidatos ${corpSeleccionada}`;
+
+                // Determinar qué datos leer del JSON
+                const listaCandidatos = corpSeleccionada === "CÁMARA" ? (dataMun.top_camara || []) : (dataMun.top_senado || []);
+                
+                // Asignar votos reales globales del municipio
+                const totalVotosGlobal = corpSeleccionada === "CÁMARA" ? (dataMun.total_votos_global_ca || 0) : (dataMun.total_votos_global_se || 0);
+                document.getElementById('lblVotos').innerText = totalVotosGlobal.toLocaleString(); 
+
+                const liderSE = dataMun.partido_lider_senado || "No detectado";
+                const colorLider = coloresPartidos[liderSE.toUpperCase()] || "inherit";
+                const lblLider = document.getElementById('lblLiderSE');
+                lblLider.innerText = liderSE;
+                lblLider.style.color = colorLider;
+
+                const tbody = document.querySelector('#tablaCandidatos tbody');
+                tbody.innerHTML = "";
+
+                if (listaCandidatos.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">No se encontraron candidatos procesados en el JSON para ${mun}</td></tr>`;
+                } else {
+                    listaCandidatos.forEach(c => {
+                        const nombreCand = c.candidato || "DESCONOCIDO";
+                        const partidoCand = c.partido || "INDEPENDIENTE";
+                        const votosCand = c.votos !== undefined ? c.votos : 0;
+                        const colorHex = coloresPartidos[partidoCand.toUpperCase()] || "#7f8c8d";
+
+                        tbody.innerHTML += `
+                            <tr>
+                                <td><strong>${nombreCand}</strong></td>
+                                <td>
+                                    <span class="badge-partido" style="background-color: ${colorHex};"></span>
+                                    ${partidoCand}
+                                </td>
+                                <td>${c.corporacion}</td>
+                                <td><span class="votos-destacados">${votosCand.toLocaleString()}</span></td>
+                            </tr>
+                        `;
+                    });
+                }
+
+                renderArrastre(mun);
+            } catch(e) {
+                console.error("[ERROR CAMBIAR FILTROS]", e);
+            }
+        }
+
+        // Exportación de CSV
+        document.getElementById('btnExportar').addEventListener('click', () => {
+            const mun = document.getElementById('selectorMunicipio').value;
+            const corpSeleccionada = document.getElementById('selectorCorp').value;
+            const dataMun = datosElectorales[mun];
+            const lista = corpSeleccionada === "CÁMARA" ? (dataMun.top_camara || []) : (dataMun.top_senado || []);
+
+            if (!lista || lista.length === 0) return;
+
+            let csvContent = "data:text/csv;charset=utf-8,Candidato,Partido,Corporacion,Votos\n";
+            lista.forEach(c => {
+                csvContent += `"${c.candidato}","${c.partido}","${c.corporacion}",${c.votos}\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `reporte_${corpSeleccionada.toLowerCase()}_${mun.toLowerCase()}_2026.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+
         const btnTheme = document.getElementById('btnTheme');
         btnTheme.addEventListener('click', () => {
             const currentTheme = document.documentElement.getAttribute('data-theme');
@@ -270,33 +369,6 @@
             document.documentElement.setAttribute('data-theme', newTheme);
         });
 
-        // Lógica para exportar la tabla del municipio activo a un CSV (Bonus 4.2)
-        document.getElementById('btnExportar').addEventListener('click', () => {
-            const mun = document.getElementById('selectorMunicipio').value;
-            const dataMun = datosElectorales[mun];
-            const lista = dataMun ? (dataMun.top_candidatos || dataMun.candidatos || []) : [];
-            
-            if (lista.length === 0) return;
-            
-            let csvContent = "data:text/csv;charset=utf-8,Candidato,Partido,Corporacion,Votos\n";
-            lista.forEach(c => {
-                const n = c.candidato || c.nombre || "DESCONOCIDO";
-                const p = c.partido || "INDEPENDIENTE";
-                const v = c.votos !== undefined ? c.votos : 0;
-                const corp = n.toUpperCase().includes("_CA_") ? "CÁMARA" : "SENADO";
-                csvContent += `"${n}","${p}","${corp}",${v}\n`;
-            });
-
-            const encodedUri = encodeURI(csvContent);
-            const link = document.createElement("a");
-            link.setAttribute("href", encodedUri);
-            link.setAttribute("download", `reporte_votos_${mun.toLowerCase()}_2026.csv`);
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        });
-
-        // Inicializar el flujo al terminar de cargar la ventana
         window.onload = inicializarDashboard;
     </script>
 </body>
